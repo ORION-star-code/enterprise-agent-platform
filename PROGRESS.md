@@ -1,10 +1,10 @@
 # Project Progress
 
 ## Current Status
-- **Latest commit**: 5d5645e (docs: add root README with architecture overview and quick start guide)
-- **Test status**: 7/7 passed
-- **Lint**: ruff — All checks passed
-- **Type check**: mypy — Success, no issues found in 24 source files
+- **Latest commit**: 4543986 (feat: configure ruff/mypy toolchain, fix test failures, add harness docs)
+- **Test status**: rag-service 7/7, agent-gateway 6/6
+- **Lint**: ruff — All checks passed (both services)
+- **Type check**: mypy — Success (both services)
 
 ## Completed
 - [x] Monorepo directory structure scaffolded
@@ -19,8 +19,11 @@
 - [x] Fix 5 test errors (root cause: stale Windows temp directory permissions)
 - [x] Configure ruff linting (E/F/W rules, line-length 88)
 - [x] Configure mypy type checking (explicit_package_bases, ignore_missing_imports)
-- [x] Fix 8 ruff E501 line-length violations
-- [x] Fix 5 mypy type errors (no-any-return, arg-type)
+- [x] agent-gateway: LangGraph workflow (intent_router -> planner -> rag/tool_executor -> synthesizer)
+- [x] agent-gateway: MockLLMClient (rule-based, no external API)
+- [x] agent-gateway: RAG integration via direct rag-service module import
+- [x] agent-gateway: FastAPI chat API with session management and traces
+- [x] agent-gateway: MCP client stubs (tool_registry, mcp_client)
 
 ## In Progress
 - (none)
@@ -29,5 +32,6 @@
 - (none currently)
 
 ## Next Steps
-1. Begin agent-gateway implementation (LangGraph workflow)
-2. Implement knowledge-mcp-server to bridge rag-service with agent
+1. Implement knowledge-mcp-server to bridge rag-service with agent via MCP
+2. Implement business-mcp-server with order/customer/inventory tools
+3. Integrate real LLM provider (replace MockLLMClient)

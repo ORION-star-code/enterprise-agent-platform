@@ -21,17 +21,17 @@ State transitions are controlled by verification results only.
 - **Verification**: `cd rag-service && uv run pytest tests/test_api.py -x -k collection`
 - **State**: passing
 
-## agent-gateway (not started)
+## agent-gateway
 
 ### F04: LangGraph Workflow
 - **Behavior**: Intent router -> planner -> rag/tool_executor -> synthesizer pipeline
 - **Verification**: `cd agent-gateway && uv run pytest tests/ -x`
-- **State**: not_started
+- **State**: passing
 
 ### F05: MCP Client Integration
 - **Behavior**: Discover and invoke tools from MCP servers via protocol
 - **Verification**: `cd agent-gateway && uv run pytest tests/test_mcp_client.py -x`
-- **State**: not_started
+- **State**: active (stubs implemented, real MCP pending)
 
 ## mcp-servers (not started)
 
