@@ -1,0 +1,65 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.whl
+.venv/
+.venv-test/
+.uv-cache/
+.pytest_cache/
+.tmp/
+htmlcov/
+.coverage
+coverage.xml
+
+# === Storage (local dev data) ===
+storage/
+
+# === Java / Spring Boot ===
+target/
+*.class
+*.jar
+*.war
+*.ear
+.gradle/
+gradle/wrapper/gradle-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# === Node / Vue.js ===
+node_modules/
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === IDE / Editor ===
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Environment / Secrets ===
+.env
+.env.*
+!.env.example
+
+# === Claude Code (tooling, not project source) ===
+.claude/
+
+# === Logs ===
+logs/
+*.log
