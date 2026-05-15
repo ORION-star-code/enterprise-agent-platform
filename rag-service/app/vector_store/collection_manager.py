@@ -7,7 +7,9 @@ from app.schemas.document_schema import CollectionStatusResponse
 
 class CollectionManager:
     def __init__(self, storage_dir: str | Path | None = None) -> None:
-        self.storage_dir = Path(storage_dir) if storage_dir else self.default_storage_dir()
+        self.storage_dir = (
+            Path(storage_dir) if storage_dir else self.default_storage_dir()
+        )
         self.uploads_dir = self.storage_dir / "uploads"
         self.documents_path = self.storage_dir / "documents.json"
         self.chunks_path = self.storage_dir / "chunks.json"

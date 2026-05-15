@@ -9,7 +9,9 @@ HEADING_PATTERN = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 
 
 class HeadingChunker:
-    def split_sections(self, text: str, default_section: str = "General") -> list[SectionBlock]:
+    def split_sections(
+        self, text: str, default_section: str = "General"
+    ) -> list[SectionBlock]:
         current_section = default_section
         current_lines: list[str] = []
         sections: list[SectionBlock] = []

@@ -11,8 +11,10 @@ from app.vector_store.collection_manager import CollectionManager
 
 def _model_dump(model: Any) -> dict[str, Any]:
     if hasattr(model, "model_dump"):
-        return model.model_dump()
-    return model.dict()
+        result: dict[str, Any] = model.model_dump()
+        return result
+    result = model.dict()
+    return result
 
 
 class LocalQdrantStore:
@@ -22,7 +24,9 @@ class LocalQdrantStore:
         self.documents_path = self.collection_manager.documents_path
         self.chunks_path = self.collection_manager.chunks_path
 
-    def upsert_document(self, document: DocumentRecord, chunks: list[DocumentChunk]) -> None:
+    def upsert_document(
+        self, document: DocumentRecord, chunks: list[DocumentChunk]
+    ) -> None:
         documents = self._read_json(self.documents_path)
         existing_chunks = self._read_json(self.chunks_path)
 
@@ -60,7 +64,11 @@ class LocalQdrantStore:
         return [
             chunk
             for chunk in chunks
-            if all(chunk.metadata.get(key) == value for key, value in filters.items() if value)
+            if all(
+                chunk.metadata.get(key) == value
+                for key, value in filters.items()
+                if value
+            )
         ]
 
     def get_chunk(self, chunk_id: str) -> DocumentChunk | None:
@@ -79,7 +87,8 @@ class LocalQdrantStore:
         content = path.read_text(encoding="utf-8").strip()
         if not content:
             return {}
-        return json.loads(content)
+        result: dict[str, Any] = json.loads(content)
+        return result
 
     def _write_json(self, path: Path, payload: dict[str, Any]) -> None:
         path.write_text(

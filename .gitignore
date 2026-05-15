@@ -12,6 +12,7 @@ build/
 .venv-test/
 .uv-cache/
 .pytest_cache/
+pytest-cache-files-*
 .tmp/
 htmlcov/
 .coverage
@@ -59,6 +60,10 @@ desktop.ini
 
 # === Claude Code (tooling, not project source) ===
 .claude/
+CLAUDE.md
+
+# === Implementation records ===
+2026.5.15-Github推送.md
 
 # === Logs ===
 logs/

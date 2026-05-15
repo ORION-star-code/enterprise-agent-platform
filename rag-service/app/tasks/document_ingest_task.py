@@ -59,7 +59,9 @@ class DocumentIngestTask:
         raw_chunks = self.chunker.split_sections(sections)
 
         if not raw_chunks:
-            raise ValueError(f"No text chunks generated for document: {command.doc_name}")
+            raise ValueError(
+                f"No text chunks generated for document: {command.doc_name}"
+            )
 
         document_data = build_document_metadata(
             doc_id=doc_id,

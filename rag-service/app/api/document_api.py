@@ -28,7 +28,9 @@ async def upload_document(
     permission: str = Form("internal"),
 ) -> DocumentUploadResponse:
     if not file.filename:
-        raise HTTPException(status_code=400, detail="Uploaded file must have a filename.")
+        raise HTTPException(
+            status_code=400, detail="Uploaded file must have a filename."
+        )
 
     doc_id = generate_doc_id()
     manager = CollectionManager()

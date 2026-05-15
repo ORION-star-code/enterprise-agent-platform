@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 
@@ -23,7 +24,7 @@ def build_document_metadata(
     source_path: str | Path,
     chunk_count: int,
     created_at: str | None = None,
-) -> dict[str, str | int]:
+) -> dict[str, Any]:
     now = utc_now_iso()
     return {
         "doc_id": doc_id,

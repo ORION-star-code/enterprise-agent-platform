@@ -72,7 +72,9 @@ class RecursiveChunker(BaseChunker):
         emit_buffer()
         return chunks
 
-    def _split_long_text(self, text: str, section: str, start_index: int) -> list[RawChunk]:
+    def _split_long_text(
+        self, text: str, section: str, start_index: int
+    ) -> list[RawChunk]:
         chunks: list[RawChunk] = []
         step = max(1, self.max_chars - self.overlap_chars)
         start = 0

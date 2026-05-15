@@ -36,6 +36,63 @@ cd rag-service && uv run pytest tests/test_api.py
 cd rag-service && uv run pytest tests/test_api.py::test_function_name
 ```
 
+## Git Operations
+
+### GitHub 信息
+
+- **仓库地址**: https://github.com/ORION-star-code/enterprise-agent-platform
+- **用户名**: ORION-star-code
+- **远程**: `origin` → `https://github.com/ORION-star-code/enterprise-agent-platform.git`
+
+### gh CLI
+
+Windows 下 gh CLI 安装路径：`C:\Program Files\GitHub CLI\gh.exe`。若终端未刷新 PATH，需使用全路径。
+
+```bash
+# 查看登录状态
+gh auth status
+
+# 创建仓库
+gh repo create <name> --public --source=. --remote=origin --push
+
+# 查看 PR
+gh pr list
+gh pr view <number>
+
+# 查看 Issue
+gh issue list
+gh issue view <number>
+```
+
+### 常用 Git 命令
+
+```bash
+# 提交
+git add .
+git commit -m "feat: 描述"
+
+# 推送
+git push origin main
+
+# 拉取
+git pull origin main
+
+# 分支
+git checkout -b feature/xxx
+git push -u origin feature/xxx
+```
+
+### 提交规范
+
+使用 Conventional Commits 前缀：
+
+- `feat:` — 新功能
+- `fix:` — 修复 bug
+- `refactor:` — 重构
+- `docs:` — 文档
+- `test:` — 测试
+- `chore:` — 构建/工具链
+
 ## Architecture
 
 ### rag-service (FastAPI, fully implemented)
@@ -79,3 +136,87 @@ Vue.js SPA with views for chat, knowledge base, tool traces, and settings. API c
 - **Local JSON store instead of Qdrant**: The `LocalQdrantStore` mimics Qdrant's interface using flat JSON files, enabling development without a running Qdrant instance. The `CollectionManager` manages storage paths at `rag-service/storage/`.
 - **Hybrid retrieval**: Search uses both dense (vector) and keyword retrieval with weighted reranking (65% dense, 35% keyword by default).
 - **MCP protocol**: The agent-gateway communicates with tool servers via MCP (Model Context Protocol), allowing tool discovery and invocation to be decoupled from the orchestrator.
+
+---
+
+## Harness Five Subsystems
+
+This project follows the Harness Engineering methodology. Five subsystems ensure agent effectiveness.
+
+### 1. Instruction Subsystem
+- Entry file: `CLAUDE.md` (this file) — project overview, run commands, hard constraints
+- Feature manifest: `FEATURES.md` — behavior + verification + state for each feature
+- Decision log: `DECISIONS.md` — what, why, when for each design decision
+
+### 2. Tools Subsystem
+- Minimum privilege: agent gets only the access needed for current task
+- Standardized commands below — always use these, not ad-hoc commands
+
+### 3. Environment Subsystem
+- Python 3.12+ managed by **uv** (not pip/poetry)
+- Dependencies locked in `pyproject.toml` + `uv.lock`
+- Self-describing: `pyproject.toml` specifies all deps and versions
+
+### 4. State Subsystem
+- `PROGRESS.md` — current commit, test status, completed/in-progress/blocked items, next steps
+- `DECISIONS.md` — design decision log
+- `FEATURES.md` — feature manifest with verification-based state machine
+- Git commits serve as checkpoints — one atomic commit per logical unit
+
+### 5. Feedback Subsystem
+- Verification commands (see below) — run after every change
+- Three-layer verification: syntax -> runtime behavior -> system-level
+- Completion = verification passing, not "code looks done"
+
+---
+
+## Verification Commands
+
+```bash
+# Tests (rag-service)
+cd rag-service && uv run pytest
+
+# Single test file
+cd rag-service && uv run pytest tests/test_api.py
+
+# Single test
+cd rag-service && uv run pytest tests/test_api.py::test_function_name
+
+# App starts
+cd rag-service && uv run python -c "from app.main import app; print('OK')"
+```
+
+---
+
+## Work Rules
+
+- **WIP=1**: Only one feature active at a time. Complete and verify before starting next.
+- **Completion evidence**: A feature is "done" when its verification command passes, not when code "looks right."
+- **No premature optimization**: Core functionality must pass verification before any refactoring.
+- **No scope creep**: Don't "顺便" refactor unrelated code while implementing a feature.
+
+---
+
+## Session Lifecycle
+
+### Session Start (Clock In)
+1. Read `PROGRESS.md` — understand current state
+2. Read `DECISIONS.md` — recall important decisions
+3. Run verification commands — confirm clean state
+4. Continue from `PROGRESS.md` "Next Steps"
+
+### Session End (Clock Out)
+1. Update `PROGRESS.md` with current status
+2. Run full verification — ensure clean state
+3. Commit all completed work
+4. Verify: build passes, tests pass, no debug artifacts
+
+---
+
+## Session Exit Checklist
+
+- [ ] App starts: `cd rag-service && uv run python -c "from app.main import app; print('OK')"`
+- [ ] Tests pass: `cd rag-service && uv run pytest`
+- [ ] `PROGRESS.md` updated
+- [ ] No debug artifacts (print statements, debugger, TODO hacks)
+- [ ] All changes committed

@@ -19,7 +19,10 @@ def extract_text_features(text: str) -> list[str]:
 
     for size in (2, 3, 4):
         if len(compact) >= size:
-            features.extend(compact[index : index + size] for index in range(len(compact) - size + 1))
+            features.extend(
+                compact[index : index + size]
+                for index in range(len(compact) - size + 1)
+            )
 
     return features or [normalized]
 
