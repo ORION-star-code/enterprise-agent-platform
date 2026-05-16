@@ -1,10 +1,10 @@
 # Project Progress
 
 ## Current Status
-- **Latest commit**: 4543986 (feat: configure ruff/mypy toolchain, fix test failures, add harness docs)
-- **Test status**: rag-service 7/7, agent-gateway 6/6
-- **Lint**: ruff — All checks passed (both services)
-- **Type check**: mypy — Success (both services)
+- **Latest commit**: f875d40 (feat: implement agent-gateway with LangGraph workflow)
+- **Test status**: rag-service 7/7, agent-gateway 12/12, knowledge-mcp-server 28/28, business-mcp-server 24/24
+- **Lint**: ruff — All checks passed (all four services)
+- **Type check**: mypy — Success (all four services)
 
 ## Completed
 - [x] Monorepo directory structure scaffolded
@@ -24,6 +24,20 @@
 - [x] agent-gateway: RAG integration via direct rag-service module import
 - [x] agent-gateway: FastAPI chat API with session management and traces
 - [x] agent-gateway: MCP client stubs (tool_registry, mcp_client)
+- [x] knowledge-mcp-server: MCP tools (knowledge_search, get_chunk, document_summary, list_documents, get_citations)
+- [x] knowledge-mcp-server: MCP resources (kb://policy, kb://faq, kb://sop)
+- [x] knowledge-mcp-server: MCP prompts (policy_answer, faq_answer, summarize_document)
+- [x] knowledge-mcp-server: RagServiceClient HTTP bridge to rag-service
+- [x] knowledge-mcp-server: 28 tests passing (client, tools, resources, prompts)
+- [x] business-mcp-server: 5 MCP tools (order, customer, inventory, ticket lookup)
+- [x] business-mcp-server: 5 MCP resources (order status, refund rules, invoice rules, table schemas)
+- [x] business-mcp-server: 2 MCP prompts (order summary, customer reply)
+- [x] business-mcp-server: Mock data client (MVP, ready for Spring Boot replacement)
+- [x] business-mcp-server: 24 tests passing
+- [x] agent-gateway: MCPClient rewritten with real SSE transport (mcp SDK)
+- [x] agent-gateway: ServerRegistry mapping knowledge/business server URLs
+- [x] agent-gateway: tool_executor_node calls MCP servers via asyncio.run()
+- [x] agent-gateway: 12 tests passing (6 original + 6 new MCP tests)
 
 ## In Progress
 - (none)
@@ -32,6 +46,5 @@
 - (none currently)
 
 ## Next Steps
-1. Implement knowledge-mcp-server to bridge rag-service with agent via MCP
-2. Implement business-mcp-server with order/customer/inventory tools
-3. Integrate real LLM provider (replace MockLLMClient)
+1. Integrate real LLM provider (replace MockLLMClient)
+2. Implement frontend-web Vue.js chat interface

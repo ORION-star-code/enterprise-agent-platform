@@ -31,19 +31,19 @@ State transitions are controlled by verification results only.
 ### F05: MCP Client Integration
 - **Behavior**: Discover and invoke tools from MCP servers via protocol
 - **Verification**: `cd agent-gateway && uv run pytest tests/test_mcp_client.py -x`
-- **State**: active (stubs implemented, real MCP pending)
+- **State**: passing
 
 ## mcp-servers (not started)
 
 ### F06: Business MCP Server
 - **Behavior**: Expose order/customer/inventory/ticket tools via MCP
 - **Verification**: `cd mcp-servers/business-mcp-server && uv run pytest tests/ -x`
-- **State**: not_started
+- **State**: passing
 
 ### F07: Knowledge MCP Server
 - **Behavior**: Expose document search/citation tools via MCP, backed by rag-service
 - **Verification**: `cd mcp-servers/knowledge-mcp-server && uv run pytest tests/ -x`
-- **State**: not_started
+- **State**: passing
 
 ## business-service (not started)
 
