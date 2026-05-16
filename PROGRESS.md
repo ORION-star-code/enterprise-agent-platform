@@ -5,6 +5,7 @@
 - **Test status**: rag-service 7/7, agent-gateway 12/12, knowledge-mcp-server 28/28, business-mcp-server 24/24
 - **Lint**: ruff — All checks passed (all four services)
 - **Type check**: mypy — Success (all four services)
+- **Frontend**: vue-tsc --noEmit + vite build — Success
 
 ## Completed
 - [x] Monorepo directory structure scaffolded
@@ -38,6 +39,14 @@
 - [x] agent-gateway: ServerRegistry mapping knowledge/business server URLs
 - [x] agent-gateway: tool_executor_node calls MCP servers via asyncio.run()
 - [x] agent-gateway: 12 tests passing (6 original + 6 new MCP tests)
+- [x] frontend-web: Vue 3 + TypeScript + Vite project setup
+- [x] frontend-web: API layer (agentApi, sessionApi, documentApi) with axios
+- [x] frontend-web: Pinia chat store (messages, sessions, send/receive)
+- [x] frontend-web: Vue Router (ChatView, KnowledgeBaseView, ToolTraceView, SettingsView)
+- [x] frontend-web: Components (ChatInput, ChatMessage, CitationPanel, ToolCallTimeline, DocumentUploader)
+- [x] frontend-web: ChatView with 3-column layout (sessions, chat, citations)
+- [x] frontend-web: Dark theme UI
+- [x] frontend-web: TypeScript + Vite build passing
 
 ## In Progress
 - (none)
@@ -47,4 +56,4 @@
 
 ## Next Steps
 1. Integrate real LLM provider (replace MockLLMClient)
-2. Implement frontend-web Vue.js chat interface
+2. Implement business-service Spring Boot backend

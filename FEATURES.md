@@ -56,5 +56,5 @@ State transitions are controlled by verification results only.
 
 ### F09: Vue.js Chat Interface
 - **Behavior**: Chat view with agent message flow, session management
-- **Verification**: `cd frontend-web && npm run test:unit`
-- **State**: not_started
+- **Verification**: `cd frontend-web && npm run build`
+- **State**: passing
