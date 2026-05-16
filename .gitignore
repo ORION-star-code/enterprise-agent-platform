@@ -69,3 +69,7 @@ Harness*.pdf
 # === Logs ===
 logs/
 *.log
+
+# === Startup scripts (local only) ===
+start.sh
+start.bat

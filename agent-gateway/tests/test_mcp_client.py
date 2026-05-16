@@ -9,13 +9,13 @@ from app.mcp_client.server_registry import ServerRegistry
 def test_server_registry_has_knowledge() -> None:
     registry = ServerRegistry()
     url = registry.get_url("knowledge")
-    assert url == "http://localhost:8003"
+    assert url == "http://localhost:8003/sse"
 
 
 def test_server_registry_has_business() -> None:
     registry = ServerRegistry()
     url = registry.get_url("business")
-    assert url == "http://localhost:8002"
+    assert url == "http://localhost:8002/sse"
 
 
 def test_server_registry_unknown() -> None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import concurrent.futures
 from typing import Any
 
 from app.graph.state import AgentState
@@ -18,13 +19,28 @@ _STEP_TOOLS: dict[str, tuple[str, str]] = {
 }
 
 
+def _run_in_new_loop(coro: Any) -> Any:
+    """Run async coroutine in a new event loop on a separate thread."""
+    def _target() -> Any:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            return loop.run_until_complete(coro)
+        finally:
+            loop.close()
+            asyncio.set_event_loop(None)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(_target)
+        return future.result()
+
+
 async def _execute_tools(
     user_message: str, plan: list[str] | None
 ) -> list[dict[str, Any]]:
     registry = ServerRegistry()
     results: list[dict[str, Any]] = []
 
-    # Determine which tools to call based on plan steps
     tools_to_call: list[tuple[str, str, dict[str, Any]]] = []
 
     if plan:
@@ -46,7 +62,6 @@ async def _execute_tools(
                     args = {"customer_name": user_message}
                 tools_to_call.append((server, tool, args))
 
-    # If no plan matched, do a default business lookup
     if not tools_to_call:
         tools_to_call.append((
             "business",
@@ -86,7 +101,7 @@ def tool_executor_node(state: AgentState) -> dict:
     user_message = state.get("user_message", "")
     plan = state.get("plan")
 
-    tool_results = asyncio.run(_execute_tools(user_message, plan))
+    tool_results = _run_in_new_loop(_execute_tools(user_message, plan))
 
     trace_entry = {
         "node": "tool_executor",
